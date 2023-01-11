@@ -4,7 +4,34 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- This is called "view" of HTML markup that defines the appearance of UI -->
+
+<p>First String: <input data-bind="value: firstString" /></p>
+<p>Second String: <input data-bind="value: secondString" /></p>
+
+<p>First String: <strong data-bind="text: firstString">Hi</strong></p>
+<p>Second String: <strong data-bind="text: secondString">There</strong></p>
+
+<p>Derived String: <strong data-bind="text: thirdString"></strong></p>
+
+@section scripts {
+
+    <script>
+        // <!-- This is called "viewmodel".This javascript section defines the data and
+        //   behavior of UI-- >
+
+
+        function AppViewModel() {
+            this.firstString = ko.observable("Enter First String");
+            this.secondString = ko.observable("Enter Second String");
+
+            this.thirdString = ko.computed(function () {
+                return this.firstString() + " " + this.secondString();
+            }, this);
+        }
+
+        // Activates knockout.js
+        ko.applyBindings(new AppViewModel());
+    </script>
+}
+
